@@ -1,7 +1,12 @@
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 
-local player = Players.LocalPlayer
+local player = Players:WaitForChild("LocalPlayer") or Players.LocalPlayer
+
+if not player then
+    print("Error: Could not find LocalPlayer")
+    return
+end
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
@@ -11,7 +16,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         if character then
             local humanoid = character:FindFirstChildOfClass("Humanoid")
             if humanoid then
-                humanoid.Health = 0
+                humanoid:TakeDamage(humanoid.MaxHealth)
             end
         end
     end
